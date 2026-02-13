@@ -5,13 +5,22 @@ export interface IAlbum extends Document {
     artist: string;
     year: number;
     genre: string[];
-}
+} 
 
-const albumSchema = new Schema<IAlbum>({
-    title: { type: String, required: true },
-    artist: { type: String, required: true },
-    year: { type: Number, required: true },
-    genre: { type: [String], default: [] }
+const albumSchema = new Schema<IAlbum>(
+    {
+    title: { 
+        type: String, required: true 
+    }, 
+    artist: { 
+        type: String, required: true 
+    },
+    year: { 
+        type: Number, required: true 
+    },
+    genre: { 
+        type: [String], default: []
+     }
 }, { timestamps: true });
 
 export default model<IAlbum>("Album", albumSchema);

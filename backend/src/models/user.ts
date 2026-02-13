@@ -3,13 +3,35 @@ import { Schema, model, Document } from "mongoose";
 export interface IUser extends Document {
     username: string;
     email: string;
-    password: string; // hashovana lozinka
+    password: string; 
+    verified: boolean;
+    verificationToken?: string;
 }
 
 const userSchema = new Schema<IUser>({
-    username: { type: String, required: true, unique: true, trim: true },
-    email: { type: String, required: true, unique: true, trim: true },
-    password: { type: String, required: true }
+    username: { 
+        type: String, 
+        required: true, 
+        unique: true, 
+        immutable: true
+     },
+    email: { 
+        type: String, 
+        required: true, 
+        unique: true, 
+        isEmail: true
+     },
+    password: { 
+        type: String, 
+        required: true 
+    },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+    }
 }, { timestamps: true });
 
 export default model<IUser>("User", userSchema);
