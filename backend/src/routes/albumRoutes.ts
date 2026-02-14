@@ -1,15 +1,11 @@
 import express from "express";
-import { createAlbum, getAlbums, getAlbumById } from "../controllers/albumController"
+import * as albumControllers from "../controllers/albumController"
 
 const router = express.Router();
 
-// Dodavanje albuma
-router.post("/", createAlbum);
-
-// Dobavljanje svih albuma
-router.get("/", getAlbums);
-
-// Dobavljanje albuma po ID
-router.get("/:id", getAlbumById);
+router.post("/", albumControllers.createAlbum);
+router.get("/", albumControllers.getAlbums);
+router.get("/:id", albumControllers.getAlbumById);
+router.delete("/:id", albumControllers.deleteAlbum);
 
 export default router;

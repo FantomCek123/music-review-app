@@ -1,9 +1,17 @@
 import { Schema, model, Document, Types } from "mongoose";
 
 export interface IReview extends Document {
+    //_id: Types.ObjectId;
+    //id: string;
     user: Types.ObjectId;
     album: Types.ObjectId;
     rating: number;
+    comment: string;
+}
+
+export interface INewReview {
+    user: Types.ObjectId;
+    album: Types.ObjectId;
     comment: string;
 }
 

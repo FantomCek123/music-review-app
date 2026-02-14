@@ -11,7 +11,6 @@ app.use(express.json());
 
 connectDB();
 
-// Rute
 app.use("/users", userRoutes);
 app.use("/albums", albumRoutes);
 app.use("/reviews", reviewRoutes);

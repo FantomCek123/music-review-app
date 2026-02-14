@@ -1,6 +1,15 @@
 import { Schema, model, Document } from "mongoose";
 
 export interface IAlbum extends Document {
+    //_id: Types.ObjectId;
+    //id: string;
+    title: string;
+    artist: string;
+    year: number;
+    genre: string[];
+} 
+
+export interface INewAlbum {
     title: string;
     artist: string;
     year: number;
