@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import AlbumForm from "../components/AlbumForm";
+import AlbumList from "../components/AlbumList";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -8,10 +10,16 @@ const Home = () => {
     navigate("/login");
   };
 
+  const refresh = () => window.location.reload();
+
   return (
-    <div style={{ textAlign: "center", marginTop: 50 }}>
-      <h2>Welcome Home!</h2>
-      <button onClick={handleLogout} style={{ padding: 10, marginTop: 20 }}>Logout</button>
+    <div style={{ padding: 40 }}>
+      <button onClick={handleLogout}>Logout</button>
+
+      <h1>🎵 Music App</h1>
+
+      <AlbumForm refresh={refresh} />
+      <AlbumList />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 
 const AppRoutes = () => {
-  const isAuthenticated = !!localStorage.getItem("token"); // primer provere
+  const isAuthenticated = !!localStorage.getItem("token");
 
   return (
     <Router>
@@ -13,7 +13,8 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route 
           path="/" 
-          element={isAuthenticated ? <Home /> : <Navigate to="/login" />} 
+          //element={isAuthenticated ? <Home /> : <Navigate to="/login" />} 
+          element={<Home />} 
         />
       </Routes>
     </Router>
