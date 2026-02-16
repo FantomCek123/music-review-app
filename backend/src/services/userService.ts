@@ -2,6 +2,8 @@ import User, { IUser, INewUser } from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 const JWT_SECRET = "supersecret";
+import crypto from "crypto";
+
 
 export const createUserService = async (data: INewUser): Promise<IUser> => {
   const existingUser = await User.findOne({
@@ -14,12 +16,15 @@ export const createUserService = async (data: INewUser): Promise<IUser> => {
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
 
+  const token = crypto.randomBytes(32).toString("hex");
+
   return await User.create({
     ...data,
     password: hashedPassword,
+    verified: false,
+    verificationToken: token,
   });
 };
-
 
 
 export const getUsersService = async (): Promise<IUser[]> => {

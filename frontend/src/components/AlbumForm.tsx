@@ -18,8 +18,13 @@ const AlbumForm = ({ refresh }: Props) => {
       title,
       artist,
       year,
-      genre: genre.split(","),
+      genre: genre.split(",").map(g => g.trim()),
     });
+
+    setTitle("");
+    setArtist("");
+    setGenre("");
+    setYear(2024);
 
     refresh();
   };
@@ -27,10 +32,31 @@ const AlbumForm = ({ refresh }: Props) => {
   return (
     <form onSubmit={submit}>
       <h3>Add Album</h3>
-      <input placeholder="Title" onChange={e => setTitle(e.target.value)} />
-      <input placeholder="Artist" onChange={e => setArtist(e.target.value)} />
-      <input type="number" onChange={e => setYear(Number(e.target.value))} />
-      <input placeholder="Genres" onChange={e => setGenre(e.target.value)} />
+
+      <input
+        placeholder="Title"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+      />
+
+      <input
+        placeholder="Artist"
+        value={artist}
+        onChange={e => setArtist(e.target.value)}
+      />
+
+      <input
+        type="number"
+        value={year}
+        onChange={e => setYear(Number(e.target.value))}
+      />
+
+      <input
+        placeholder="Genres"
+        value={genre}
+        onChange={e => setGenre(e.target.value)}
+      />
+
       <button>Add</button>
     </form>
   );

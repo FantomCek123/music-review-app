@@ -13,8 +13,8 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route 
           path="/" 
-          //element={isAuthenticated ? <Home /> : <Navigate to="/login" />} 
-          element={<Home />} 
+          element={isAuthenticated ? <Home /> : <Navigate to="/login" />} 
+          //element={<Home />} 
         />
       </Routes>
     </Router>

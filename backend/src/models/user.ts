@@ -1,6 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 
 
+
 export interface IUser extends Document {
     //_id: Types.ObjectId;
     //id: string;
@@ -9,6 +10,7 @@ export interface IUser extends Document {
     password: string; 
     verified: boolean;
     verificationToken?: string;
+
 }
 
 export interface INewUser  {
@@ -28,7 +30,7 @@ const userSchema = new Schema<IUser>({
         type: String, 
         required: true, 
         unique: true, 
-        isEmail: true
+        match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"]
      },
     password: { 
         type: String, 

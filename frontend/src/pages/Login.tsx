@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import api from "../api/axios";
+import * as api from "../api/api";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,11 +11,11 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await api.post("/login", { email, password });
+      const res = await api.loginUser( { email, password });
       localStorage.setItem("token", res.data.token);
       navigate("/");
     } catch (err) {
-      alert("Login failed!");
+      alert("Login failed!" + err);
     }
   };
 

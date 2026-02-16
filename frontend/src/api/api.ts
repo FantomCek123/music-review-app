@@ -1,4 +1,31 @@
-// import api from "./axiosInstance"; // zakomentiraj ovo privremeno
+import axios from "axios";
+
+/* ================= AXIOS INSTANCE ================= */
+
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+});
+
+export default api;
+
+/* ================= TYPES ================= */
+
+/* ===== USERS ===== */
+
+export interface User {
+  _id: string;
+  username: string;
+  email: string;
+  verified: boolean;
+}
+
+export interface NewUser {
+  username: string;
+  email: string;
+  password: string;
+}
+
+/* ===== ALBUMS ===== */
 
 export interface Album {
   _id: string;
@@ -8,52 +35,93 @@ export interface Album {
   genre: string[];
 }
 
+export interface NewAlbum {
+  title: string;
+  artist: string;
+  year: number;
+  genre: string[];
+}
+
+/* ===== REVIEWS ===== */
+
 export interface Review {
   _id: string;
   album: string;
+  rating: number;
+  comment: string;
+  user: {
+    _id: string;
+    username: string;
+  };
+}
+
+export interface NewReview {
+  album: string;
+  rating: number;
   comment: string;
 }
 
-// ALBUMI
-export const getAlbums = async (): Promise<Album[]> => {
-  // return await api.get("/albums").then(r => r.data);
 
-  // privremeno fake data
-  return [
-    { _id: "1", title: "Album 1", artist: "Artist 1", year: 2023, genre: ["rock"] },
-    { _id: "2", title: "Album 2", artist: "Artist 2", year: 2022, genre: ["pop"] },
-  ];
+/* ================= USERS API ================= */
+
+export const registerUser = async (data: NewUser): Promise<User> => {
+  const res = await api.post("/users/register", data);
+  return res.data;
 };
 
-export const createAlbum = async (data: any) => {
-  // return await api.post("/albums", data).then(r => r.data);
-  console.log("Fake create album", data);
-  return data;
+export const loginUser = async (data: {
+  email: string;
+  password: string;
+}) => {
+  const res = await api.post("/users/login", data);
+  return res.data;
+};
+
+export const getUsers = async (): Promise<User[]> => {
+  const res = await api.get("/users/getAllUsers");
+  return res.data;
+};
+
+export const getUserById = async (id: string): Promise<User> => {
+  const res = await api.get(`/users/getUserWithId/${id}`);
+  return res.data;
+};
+
+export const deleteUser = async (id: string) => {
+  const res = await api.delete(`/users/deliteUserWithId/${id}`);
+  return res.data;
+};
+
+/* ================= ALBUMS API ================= */
+
+export const getAlbums = async (): Promise<Album[]> => {
+  const res = await api.get("/albums/hetAllAlbums");
+  return res.data;
+};
+
+export const createAlbum = async (data: NewAlbum): Promise<Album> => {
+  const res = await api.post("/albums/createAlbum", data);
+  return res.data;
 };
 
 export const deleteAlbum = async (id: string) => {
-  // return await api.delete(`/albums/${id}`).then(r => r.data);
-  console.log("Fake delete album", id);
-  return id;
+  const res = await api.delete(`/albums/deleteAlbumWithId/${id}`);
+  return res.data;
 };
 
-// REVIEWS
+/* ================= REVIEWS API ================= */
+
 export const getReviews = async (): Promise<Review[]> => {
-  // return await api.get("/reviews").then(r => r.data);
-  return [
-    { _id: "r1", album: "1", comment: "Great album!" },
-    { _id: "r2", album: "2", comment: "Not bad" },
-  ];
+  const res = await api.get("/reviews/getAllReviews");
+  return res.data;
 };
 
-export const createReview = async (data: any) => {
-  // return await api.post("/reviews", data).then(r => r.data);
-  console.log("Fake create review", data);
-  return data;
+export const createReview = async (data: NewReview): Promise<Review> => {
+  const res = await api.post("/reviews/createReviw", data);
+  return res.data;
 };
 
 export const deleteReview = async (id: string) => {
-  // return await api.delete(`/reviews/${id}`).then(r => r.data);
-  console.log("Fake delete review", id);
-  return id;
+  const res = await api.delete(`/reviews/deleteReviwWithId/${id}`);
+  return res.data;
 };

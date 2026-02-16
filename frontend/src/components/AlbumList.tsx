@@ -14,6 +14,11 @@ const AlbumList = () => {
     load();
   }, []);
 
+  const remove = async (id: string) => {
+    await deleteAlbum(id);
+    load();
+  };
+
   return (
     <div>
       <h3>Albums</h3>
@@ -24,11 +29,11 @@ const AlbumList = () => {
           <p>{a.artist} ({a.year})</p>
           <p>{a.genre.join(", ")}</p>
 
-          <button onClick={() => deleteAlbum(a._id).then(load)}>
+          <button onClick={() => remove(a._id)}>
             Delete
           </button>
 
-          <ReviewSection albumId={a._id} />
+          
         </div>
       ))}
     </div>
@@ -36,3 +41,5 @@ const AlbumList = () => {
 };
 
 export default AlbumList;
+
+//<ReviewSection albumId={a._id} /> linija 35

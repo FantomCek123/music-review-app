@@ -10,7 +10,12 @@ export const createUser = async (req: Request, res: Response) => {
     }
 
     const user = await us.createUserService(req.body);
-    res.status(201).json(user);
+    res.status(201).json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      verified: user.verified,
+    });;
   } catch (err) {
     res.status(400).json({ error: err });
   }
@@ -19,7 +24,15 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUsers = async (_req: Request, res: Response) => {
   const users = await us.getUsersService();
-  res.json(users);
+
+  const safeUsers = users.map(user => ({
+    _id: user._id.toString(),
+    username: user.username,
+    email: user.email,
+    verified: user.verified
+  }));
+
+  res.json(safeUsers);
 };
 
 
@@ -30,7 +43,12 @@ export const getUserById = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  res.json(user);
+  res.json({
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    verified: user.verified,
+  });;
 };
 
 
@@ -56,7 +74,12 @@ export const getUserByVerificationToken = async (req: Request, res: Response) =>
     return res.status(404).json({ message: "User not found" });
   }
 
-  res.json(user);
+  res.json({
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    verified: user.verified,
+  });;
 };
 
 
@@ -68,7 +91,12 @@ export const verifyUser = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Invalid or expired token." });
   }
 
-  res.json(user);
+  res.json({
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    verified: user.verified,
+  });;
 }
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -79,9 +107,14 @@ export const loginUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Email and password required" });
     }
 
-    const result = await us.loginUserService(email, password);
+    const user = await us.loginUserService(email, password);
 
-    res.json(result);
+    res.json({
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    verified: user.verified,
+  });;
   } catch (err: any) {
     res.status(401).json({ message: err.message });
   }
