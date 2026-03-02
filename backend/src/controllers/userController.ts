@@ -10,17 +10,19 @@ export const createUser = async (req: Request, res: Response) => {
     }
 
     const user = await us.createUserService(req.body);
+
     res.status(201).json({
+      message: "User created successfully. Please verify your email.",
       _id: user._id,
       username: user.username,
       email: user.email,
       verified: user.verified,
-    });;
-  } catch (err) {
-    res.status(400).json({ error: err });
+    });
+
+  } catch (err: any) {
+    res.status(400).json({ message: err.message });
   }
 };
-
 
 export const getUsers = async (_req: Request, res: Response) => {
   const users = await us.getUsersService();
@@ -83,21 +85,24 @@ export const getUserByVerificationToken = async (req: Request, res: Response) =>
 };
 
 
-export const verifyUser = async (req: Request, res: Response) => {
+export const verifyUserController = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.query;
 
-  const user = await us.verifyUser(req.params.verificationToken);
+    if (!token || typeof token !== "string") {
+      return res.status(400).json({ message: "Token is required" });
+    }
 
-   if (!user) {
-    return res.status(404).json({ message: "Invalid or expired token." });
+    await us.verifyUser(token);
+
+    res.status(200).json({
+      message: "Email successfully verified. You can now log in.",
+    });
+
+  } catch (err: any) {
+    res.status(400).json({ message: err.message });
   }
-
-  res.json({
-    _id: user._id,
-    username: user.username,
-    email: user.email,
-    verified: user.verified,
-  });;
-}
+};
 
 export const loginUser = async (req: Request, res: Response) => {
   try {
@@ -109,11 +114,17 @@ export const loginUser = async (req: Request, res: Response) => {
 
     const user = await us.loginUserService(email, password);
 
+    if (!user.verified) {
+      return res.status(403).json({
+        message: "Please verify your email before logging in.",
+      });
+    }
+
     res.json({
     _id: user._id,
     username: user.username,
     email: user.email,
-    verified: user.verified,
+    //verified: user.verified,
   });;
   } catch (err: any) {
     res.status(401).json({ message: err.message });

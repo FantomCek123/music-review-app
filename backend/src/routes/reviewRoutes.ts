@@ -7,5 +7,8 @@ router.post("/createReviw", reviewController.createReview);
 router.get("/getAllReviews", reviewController.getReviews);
 router.get("/getReviewWithId/:id", reviewController.getReviewById);
 router.delete("/deleteReviwWithId/:id", reviewController.deleteReview);
+router.patch("/updateReview/:id", reviewController.updateReview);
+
+
 
 export default router;

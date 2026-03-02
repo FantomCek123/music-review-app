@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 const JWT_SECRET = "supersecret";
 import crypto from "crypto";
+import { sendVerificationEmail } from "../mailer/mailer";
 
 
 export const createUserService = async (data: INewUser): Promise<IUser> => {
@@ -18,12 +19,18 @@ export const createUserService = async (data: INewUser): Promise<IUser> => {
 
   const token = crypto.randomBytes(32).toString("hex");
 
-  return await User.create({
+  const newUser = await User.create({
     ...data,
     password: hashedPassword,
     verified: false,
     verificationToken: token,
   });
+
+  await sendVerificationEmail(newUser.email, token);
+
+  return newUser;
+
+  
 };
 
 
@@ -45,25 +52,32 @@ export async function getUserByVerificationToken(verificationToken: string): Pro
     return await User.findOne({verificationToken: verificationToken});
 }
 
-export async function verifyUser(verificationToken: string): Promise<IUser | null> {
+export async function verifyUser(verificationToken: string): Promise<IUser> {
 
-    const user: IUser | null = await User.findOne({ verificationToken: verificationToken });
+    const user = await User.findOne({ verificationToken });
 
-    if (user){
-        user.verified = true;
-        user.verificationToken = undefined;
-        await user.save();
+    if (!user) {
+        throw new Error("Invalid or expired verification token");
     }
+
+    if (user.verified) {
+        throw new Error("User already verified");
+    }
+
+    user.verified = true;
+    user.verificationToken = undefined;
+
+    await user.save();
 
     return user;
 }
-
 export const loginUserService = async (email: string, password: string) => {
   const user = await User.findOne({ email });
 
   if (!user) {
     throw new Error("Invalid credentials");
   }
+
 
   const isMatch = await bcrypt.compare(password, user.password);
 

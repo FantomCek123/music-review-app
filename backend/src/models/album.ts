@@ -1,35 +1,37 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
 export interface IAlbum extends Document {
-    //_id: Types.ObjectId;
-    //id: string;
-    title: string;
-    artist: string;
-    year: number;
-    genre: string[];
-} 
+  title: string;
+  artist: string;
+  year: number;
+  genre: string[];
+
+  user: Types.ObjectId;  
+}
 
 export interface INewAlbum {
-    title: string;
-    artist: string;
-    year: number;
-    genre: string[];
-} 
+  title: string;
+  artist: string;
+  year: number;
+  genre: string[];
+
+  user: Types.ObjectId;   
+}
 
 const albumSchema = new Schema<IAlbum>(
-    {
-    title: { 
-        type: String, required: true 
-    }, 
-    artist: { 
-        type: String, required: true 
+  {
+    title: { type: String, required: true },
+    artist: { type: String, required: true },
+    year: { type: Number, required: true },
+    genre: { type: [String], default: [] },
+
+    user: {                
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    year: { 
-        type: Number, required: true 
-    },
-    genre: { 
-        type: [String], default: []
-     }
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 export default model<IAlbum>("Album", albumSchema);

@@ -12,6 +12,7 @@ export interface IReview extends Document {
 export interface INewReview {
     user: Types.ObjectId;
     album: Types.ObjectId;
+    rating: number;
     comment: string;
 }
 
