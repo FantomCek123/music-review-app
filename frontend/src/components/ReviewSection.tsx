@@ -22,11 +22,11 @@ const ReviewSection = ({ albumId }: Props) => {
   const add = async () => {
     if (!text.trim()) return;
 
-    await createReview({
-      album: albumId,
-      rating,
-      comment: text,
-    });
+    // await createReview({
+    //   album: albumId,
+    //   rating,
+    //   comment: text,
+    // });
 
     setText("");
     setRating(5);

@@ -9,16 +9,23 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await api.loginUser( { email, password });
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
-    } catch (err) {
-      alert("Login failed!" + err);
-    }
-  };
+  e.preventDefault();
 
+  try {
+    const user = await api.loginUser({ email, password });
+    localStorage.setItem("user", JSON.stringify(user));
+    navigate("/home");
+
+  } catch (err: any) {
+
+    if (err.response && err.response.data && err.response.data.message) {
+      alert(err.response.data.message);
+    } else {
+      alert("Something went wrong.");
+    }
+
+  }
+};
   return (
     <div style={{ display: "flex", flexDirection: "column", width: 300, margin: "50px auto" }}>
       <h2>Login</h2>
@@ -40,7 +47,7 @@ const Login = () => {
         <button type="submit" style={{ padding: 10, marginBottom: 10 }}>Login</button>
       </form>
 
-      {/* Dugme za register */}
+
       <div style={{ textAlign: "center" }}>
         <span>Don't have an account? </span>
         <Link to="/register">
@@ -48,6 +55,8 @@ const Login = () => {
         </Link>
       </div>
     </div>
+
+    
   );
 };
 

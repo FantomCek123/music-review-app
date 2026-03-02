@@ -14,13 +14,22 @@ const AlbumForm = ({ refresh }: Props) => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+   const userString = localStorage.getItem("user");
+
+    if (!userString) {
+      throw new Error("User is not logged in");
+    }
+
+
+    const user = JSON.parse(userString);
+
     await createAlbum({
       title,
       artist,
       year,
       genre: genre.split(",").map(g => g.trim()),
+      user: user.username
     });
-
     setTitle("");
     setArtist("");
     setGenre("");
@@ -31,7 +40,6 @@ const AlbumForm = ({ refresh }: Props) => {
 
   return (
     <form onSubmit={submit}>
-      <h3>Add Album</h3>
 
       <input
         placeholder="Title"

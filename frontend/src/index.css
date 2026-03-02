@@ -8,11 +8,12 @@
 /* BODY */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6fb;
-  color: #333;
+  background: #1c1c2e; /* tamnija, mekša pozadina */
+  color: #e0e0e0; /* blaža bela za tekst */
+  transition: background 0.3s, color 0.3s;
 }
 
-/* CENTER PAGE CONTAINER */
+/* PAGE CENTER */
 .page {
   display: flex;
   justify-content: center;
@@ -20,19 +21,21 @@ body {
   min-height: 100vh;
 }
 
-/* CARD STYLE */
+/* CARD */
 .card {
-  background: white;
+  background: linear-gradient(145deg, #2d2d42, #1f1f2f); /* gradient za dubinu */
   padding: 40px;
   border-radius: 12px;
   width: 350px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
   text-align: center;
+  border: 1px solid #3c3c55; /* blagi kontrast za ivice */
 }
 
 /* HEADINGS */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin-bottom: 20px;
+  color: #f5f5f5; /* svetlije od teksta */
 }
 
 /* INPUTS */
@@ -41,13 +44,17 @@ input {
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #555; 
   font-size: 14px;
+  background: #272738;
+  color: #e0e0e0;
+  transition: border-color 0.3s, background 0.3s;
 }
 
 input:focus {
   outline: none;
-  border-color: #5a67d8;
+  border-color: #818cf8; /* svetliji plavi akcenat */
+  background: #2c2c44;
 }
 
 /* BUTTONS */
@@ -56,30 +63,42 @@ button {
   width: 100%;
   border: none;
   border-radius: 8px;
-  background: #5a67d8;
+  background: #6366f1;
   color: white;
   font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 button:hover {
-  background: #434190;
+  background: #4CAF50;
+  transform: translateY(-2px);
 }
 
-/* LINK BUTTON STYLE */
+/* LINK BUTTON */
 .link-button {
-  background: #764ba2;
+  background: #4CAF50; /* svetliji ljubičasti ton */
   margin-top: 10px;
 }
 
 .link-button:hover {
-  background: #6b46c1;
+  background: #4CAF50;
+  transform: translateY(-2px);
 }
 
 /* SMALL TEXT */
 .small-text {
   margin-top: 15px;
   font-size: 14px;
-  color: #666;
+  color: #b0b0c0; /* blaži sivkasti ton */
 }
+
+/* FULL HEIGHT */
+html, body, #root {
+  height: 100%;
+  background: #1c1c2e;
+  color: #e0e0e0;
+}
+
+

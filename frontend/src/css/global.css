@@ -8,11 +8,11 @@
 /* BODY */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6fb;
-  color: #333;
+  background: #1e1e2f;
+  color: #e5e7eb;
 }
 
-/* CENTER PAGE CONTAINER */
+/* PAGE CENTER */
 .page {
   display: flex;
   justify-content: center;
@@ -20,19 +20,20 @@ body {
   min-height: 100vh;
 }
 
-/* CARD STYLE */
+/* CARD */
 .card {
-  background: white;
+  background: #2b2b3d;
   padding: 40px;
   border-radius: 12px;
   width: 350px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
   text-align: center;
 }
 
 /* HEADINGS */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin-bottom: 20px;
+  color: white;
 }
 
 /* INPUTS */
@@ -41,13 +42,15 @@ input {
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #444;
   font-size: 14px;
+  background: #1e1e2f;
+  color: white;
 }
 
 input:focus {
   outline: none;
-  border-color: #5a67d8;
+  border-color: #6366f1;
 }
 
 /* BUTTONS */
@@ -56,7 +59,7 @@ button {
   width: 100%;
   border: none;
   border-radius: 8px;
-  background: #5a67d8;
+  background: #4CAF50;
   color: white;
   font-size: 15px;
   cursor: pointer;
@@ -64,22 +67,24 @@ button {
 }
 
 button:hover {
-  background: #434190;
+  background: #4CAF50;
 }
 
-/* LINK BUTTON STYLE */
+/* LINK BUTTON */
 .link-button {
-  background: #764ba2;
+  background: #9333ea;
   margin-top: 10px;
 }
 
 .link-button:hover {
-  background: #6b46c1;
+  background: #7e22ce;
 }
 
 /* SMALL TEXT */
 .small-text {
   margin-top: 15px;
   font-size: 14px;
-  color: #666;
+  color: #4CAF50;
 }
+
+

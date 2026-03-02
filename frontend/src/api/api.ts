@@ -3,7 +3,7 @@ import axios from "axios";
 /* ================= AXIOS INSTANCE ================= */
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3001",
 });
 
 export default api;
@@ -33,6 +33,9 @@ export interface Album {
   artist: string;
   year: number;
   genre: string[];
+  user: string;
+
+  reviews?: Review[]; 
 }
 
 export interface NewAlbum {
@@ -40,6 +43,8 @@ export interface NewAlbum {
   artist: string;
   year: number;
   genre: string[];
+  user: string;
+
 }
 
 /* ===== REVIEWS ===== */
@@ -59,6 +64,7 @@ export interface NewReview {
   album: string;
   rating: number;
   comment: string;
+  user: string
 }
 
 
@@ -74,6 +80,7 @@ export const loginUser = async (data: {
   password: string;
 }) => {
   const res = await api.post("/users/login", data);
+  console.log(res)
   return res.data;
 };
 
@@ -95,7 +102,7 @@ export const deleteUser = async (id: string) => {
 /* ================= ALBUMS API ================= */
 
 export const getAlbums = async (): Promise<Album[]> => {
-  const res = await api.get("/albums/hetAllAlbums");
+  const res = await api.get("/albums/getAllAlbums");
   return res.data;
 };
 
@@ -106,6 +113,40 @@ export const createAlbum = async (data: NewAlbum): Promise<Album> => {
 
 export const deleteAlbum = async (id: string) => {
   const res = await api.delete(`/albums/deleteAlbumWithId/${id}`);
+  return res.data;
+};
+
+export const getAlbumById = async (id: string): Promise<Album> => {
+  const res = await api.get(`/albums/getAlbumById/${id}`);
+  return res.data;
+};
+
+
+export const searchAlbumsByName = async (name: string): Promise<Album[]> => {
+  const res = await api.get(`/albums/getAlbumByName`, { params: { name } });
+  return res.data;
+};
+
+
+export const searchAlbumsByArtist = async (artist: string): Promise<Album[]> => {
+  const res = await api.get(`/albums/getByArtist`, { params: { artist } });
+  return res.data;
+};
+
+
+export const updateAlbumArtistService = async (id: string, artist: string): Promise<Album> => {
+  const res = await api.patch(`/albums/updateArtist/${id}`, { artist });
+  return res.data;
+};
+
+
+export const updateAlbumYearService = async (id: string, year: number): Promise<Album> => {
+  const res = await api.patch(`/albums/updateYear/${id}`, { year });
+  return res.data;
+};
+
+export const updateAlbumGenreService = async (id: string, genre: string[]): Promise<Album> => {
+  const res = await api.patch(`/albums/updateGenre/${id}`, { genre });
   return res.data;
 };
 
@@ -123,5 +164,23 @@ export const createReview = async (data: NewReview): Promise<Review> => {
 
 export const deleteReview = async (id: string) => {
   const res = await api.delete(`/reviews/deleteReviwWithId/${id}`);
+  return res.data;
+};
+
+export const getReviewById = async (id: string): Promise<Review> => {
+  const res = await api.get(`/reviews/getReviewWithId/${id}`);
+  return res.data;
+};
+
+export const getAlbumsByUser = async (userId: string): Promise<Album[]> => {
+  const res = await api.get(`/albums/getAlbumsByUser/${userId}`);
+  return res.data;
+};
+
+export const updateReview = async (
+  id: string,
+  data: { rating: number; comment: string }
+): Promise<Review> => {
+  const res = await api.patch(`/reviews/updateReview/${id}`, data);
   return res.data;
 };

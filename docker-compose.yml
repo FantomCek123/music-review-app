@@ -1,0 +1,25 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "3001:3001"
+    environment:
+      MONGO_URI: "mongodb+srv://stricojebci:YyNovk2Ygv7cuvFo@cluster0.hamavtb.mongodb.net/test_db?retryWrites=true&w=majority"
+      PORT: "3001"
+      JWT_SECRET: "moja_tajna"
+      NEXTAUTH_URL: "http://localhost:3000/"
+      EMAIL_USER: "filipficanetherlands@gmail.com"
+      EMAIL_APP_PASS: "cqxe ttwj nada sjto"
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always

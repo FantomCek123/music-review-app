@@ -29,7 +29,7 @@ const Register = () => {
         password,
       });
 
-      alert("Registration successful!");
+      //alert("Registration successful!");
       navigate("/login");
     } catch (err: any) {
       console.log(err);
