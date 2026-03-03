@@ -34,7 +34,7 @@ export interface Album {
   year: number;
   genre: string[];
   user: string;
-
+  imageUrl?: string;
   reviews?: Review[]; 
 }
 
@@ -44,7 +44,7 @@ export interface NewAlbum {
   year: number;
   genre: string[];
   user: string;
-
+  image?: File;
 }
 
 /* ===== REVIEWS ===== */
@@ -107,7 +107,24 @@ export const getAlbums = async (): Promise<Album[]> => {
 };
 
 export const createAlbum = async (data: NewAlbum): Promise<Album> => {
-  const res = await api.post("/albums/createAlbum", data);
+  const formData = new FormData();
+
+  formData.append("title", data.title);
+  formData.append("artist", data.artist);
+  formData.append("year", data.year.toString());
+  formData.append("user", data.user);
+
+
+  formData.append("genre", JSON.stringify(data.genre));
+
+  if (data.image) {
+    formData.append("image", data.image);
+  }
+
+  const res = await api.post("/albums/createAlbum", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
   return res.data;
 };
 

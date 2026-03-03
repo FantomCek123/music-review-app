@@ -4,13 +4,25 @@ import * as as from "../services/albumService";
 
 export const createAlbum = async (req: Request, res: Response) => {
   try {
-    if (!isNewAlbum(req.body)) {
+    const genre = req.body.genre ? JSON.parse(req.body.genre) : [];
+
+    const albumData = {
+      title: req.body.title,
+      artist: req.body.artist,
+      year: Number(req.body.year),
+      genre: Array.isArray(genre) ? genre : [genre],
+      user: req.body.user,
+      imageUrl: req.file ? req.file.filename : undefined,
+    };
+
+    if (!isNewAlbum(albumData)) {
       return res.status(400).json({ message: "Invalid album data" });
     }
 
-    const album = await as.createAlbumService(req.body);
+    const album = await as.createAlbumService(albumData);
     res.status(201).json(album);
   } catch (err) {
+    console.error(err);
     res.status(400).json({ error: err });
   }
 };

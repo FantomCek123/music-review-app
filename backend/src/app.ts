@@ -4,6 +4,7 @@ import { connectDB } from "./config/db";
 import userRoutes from "./routes/userRoutes";
 import albumRoutes from "./routes/albumRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
+import path from "path";
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ connectDB();
 app.use("/users", userRoutes);
 app.use("/albums", albumRoutes);
 app.use("/reviews", reviewRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.get("/", (_req, res) => res.send("🎵 Music Reviews API radi"));
 

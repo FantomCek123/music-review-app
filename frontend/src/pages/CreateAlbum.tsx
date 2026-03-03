@@ -9,35 +9,49 @@ const CreateAlbum = () => {
   const [artist, setArtist] = useState("");
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
+  const [image, setImage] = useState<File | null>(null);       
+  const [preview, setPreview] = useState<string | null>(null); 
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(file);
+      setPreview(URL.createObjectURL(file)); // pravi preview
+    }
+  };
 
-    if (!title.trim() || !artist.trim() || !year.trim() || !genre.trim()) {
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!title.trim() || !artist.trim() || !year.trim() || !genre.trim()) {
     alert("Please fill in all fields!");
     return;
   }
 
+  try {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) return;
 
-    try {
-      const storedUser = localStorage.getItem("user");
-      if (!storedUser) return;
+    const user = JSON.parse(storedUser);
 
-      const user = JSON.parse(storedUser);
 
-      await api.createAlbum({
-        title,
-        artist,
-        year: Number(year),
-        genre: genre.split(",").map((g) => g.trim()),
-        user: user._id, 
-      });
-      navigate("/home");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to create album");
-    }
-  };
+    const genreList = genre.split(",").map(g => g.trim()); 
+
+    await api.createAlbum({
+      title,
+      artist,
+      year: Number(year),
+      genre: genreList,
+      user: user._id,
+      image: image || undefined,
+    });
+
+    navigate("/home");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to create album");
+  }
+};
 
   return (
     <div style={{ padding: 40 }}>
@@ -79,6 +93,17 @@ const CreateAlbum = () => {
           value={genre}
           onChange={(e) => setGenre(e.target.value)}
         />
+
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+
+
+        {preview && (
+          <img
+            src={preview}
+            alt="Preview"
+            style={{ width: 200, height: 200, objectFit: "cover" }}
+          />
+        )}
 
         <button
           type="submit"

@@ -5,7 +5,7 @@ export interface IAlbum extends Document {
   artist: string;
   year: number;
   genre: string[];
-
+  imageUrl?: string;
   user: Types.ObjectId;  
 }
 
@@ -14,7 +14,7 @@ export interface INewAlbum {
   artist: string;
   year: number;
   genre: string[];
-
+  imageUrl?: string;
   user: Types.ObjectId;   
 }
 
@@ -24,7 +24,7 @@ const albumSchema = new Schema<IAlbum>(
     artist: { type: String, required: true },
     year: { type: Number, required: true },
     genre: { type: [String], default: [] },
-
+    imageUrl: { type: String },
     user: {                
       type: Schema.Types.ObjectId,
       ref: "User",
