@@ -40,7 +40,7 @@ const EditMyAlbum: React.FC<EditMyAlbumProps> = ({ album, onDelete }) => {
     >
       {album.imageUrl && (
         <img
-          src={`http://localhost:3001/uploads/${album.imageUrl}`}
+          src={`http://localhost:5000/uploads/${album.imageUrl}`}
           alt={album.title}
           style={{ width: 120, height: 120, objectFit: "cover", borderRadius: 4 }}
         />

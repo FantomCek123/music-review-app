@@ -16,7 +16,7 @@ const CreateAlbum = () => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setImage(file);
-      setPreview(URL.createObjectURL(file)); // pravi preview
+      setPreview(URL.createObjectURL(file));
     }
   };
 

@@ -159,7 +159,7 @@ const AlbumWithReviews: React.FC<AlbumWithReviewsProps> = ({ album,
 
   return (
     <div style={{ display: "flex", gap: 12, marginBottom: 12, border: "1px solid #444", borderRadius: 6, padding: 10, alignItems: "flex-start" }}>
-      {album.imageUrl && <img src={`http://localhost:3001/uploads/${album.imageUrl}`} alt={album.title} style={{ width: 120, height: 120, objectFit: "cover", borderRadius: 4 }} />}
+      {album.imageUrl && <img src={`http://localhost:5000/uploads/${album.imageUrl}`} alt={album.title} style={{ width: 120, height: 120, objectFit: "cover", borderRadius: 4 }} />}
 
       <div style={{ flex: 1 }}>
         <h3>{album.title}</h3>
